@@ -155,11 +155,15 @@ public class NewUser extends javax.swing.JFrame {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         User user = new User(nameField.getText(), parseInt(rankField.getItemAt(WIDTH)));
-        BufferedWriter bw = new BufferedWriter(myWriter);
-        PrintWriter pw = new PrintWriter(bw);
-        pw.println(nameField.getText() +" "+ rankField.getItemAt(WIDTH));
-        pw.flush();
-        System.out.println("Successfully wrote to the file.");
+        try(FileWriter fw = new FileWriter("src/demo/Users.txt",true)){
+            BufferedWriter bw = new BufferedWriter(myWriter);
+            PrintWriter pw = new PrintWriter(bw);
+            pw.println(nameField.getText() +" "+ rankField.getItemAt(WIDTH));
+            pw.flush();
+            System.out.println("Successfully wrote to the file.");
+        }catch(IOException e){
+            
+        }
         EmployerDialogue m = new EmployerDialogue();
         m.setVisible(true);
         this.dispose();
